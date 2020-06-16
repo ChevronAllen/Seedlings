@@ -15,6 +15,24 @@ protected:
     std::map<unsigned int, GameObject*> m_hashmap;
     unsigned int m_idCounter;
 
+    virtual void doCollisions()
+    {
+        for (std::pair<unsigned int, GameObject*> kv : m_hashmap)
+        {
+            GameObject* obj = kv.second;
+            
+            if(obj == NULL || !obj->hasPhysics()){ continue; }
+
+            for (std::pair<unsigned int, GameObject*> okv : m_hashmap)
+            {
+                if(okv.second == NULL || !okv.second->hasPhysics()){ continue; }
+                if( kv.first == okv.first || !okv.second->hasPhysics()){ continue; }                
+                
+                // TODO: check for collision, trigger OnCollision for obj only.
+            }
+        }        
+    }
+
 public:
 
     Scene()

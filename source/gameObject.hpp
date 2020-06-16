@@ -4,6 +4,7 @@
 class GameObject : public Updateable
 {
 protected:
+
     double x;
     double y;
     double target_x;
@@ -17,8 +18,12 @@ protected:
 
     double yScale;
     double target_yScale;
+    bool m_hasPhysics;
+
+    
 
 public:
+
     virtual void initialize() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
@@ -26,6 +31,10 @@ public:
     virtual void destroy()=0;
     virtual void moveTo(double x,double y)=0;
     virtual void Rotate(double deg)=0;
+
+    virtual m3d::BoundingBox getAABB()=0;
+    virtual void onCollision(GameObject* other)=0;
+    bool hasPhysics(){ return m_hasPhysics;}
 
     void setAngle(double _angle)
     {
@@ -63,5 +72,5 @@ public:
     }
 
     bool screenIntersect();
-
+    
 };
