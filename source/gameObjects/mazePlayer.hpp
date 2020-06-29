@@ -15,8 +15,8 @@ public:
     TerminalObject(bool (*walls)[24][40])
     {
         wall =  walls;
-        x = 10;
-        y = 0;
+        x = 370;
+        y = 220;
         xScale = 1;
         yScale = 1;
         angle = 0;
@@ -45,6 +45,7 @@ public:
 		sprite->setPosition(x, y);
         screen->drawTop(*sprite);
     }
+
 
     void destroy(){ this->~TerminalObject(); }
     void moveTo(double _x,double _y)

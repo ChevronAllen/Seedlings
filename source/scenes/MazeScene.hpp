@@ -13,11 +13,15 @@ class MazeScene : public Minigame
 		m3dCI::Sprite *wallpaper;
 		m3dCI::Sprite *texture;
         m3dCI::Sprite* popup;
+		m3dCI::Sprite* dummy;
+		m3dCI::Button *retryBtn, *exitBtn;
+		ObjectManager* om;
 		m3d::Rectangle *winScreen;
         m3d::Rectangle *loseScreen;
 		m3d::Color *colorRec;
 		m3d::Color *colorText;
 		m3d::Text *prompt;
+		m3dCI::Text* popupText;
         TerminalObject *runner;
 		int x, y, runnerID;
         bool walls[24][40] ={ { 1, 0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1},
@@ -63,6 +67,7 @@ class MazeScene : public Minigame
             //array traversers
             x = 1.0;
 			y = 0.0;
+			om = ObjectManager::getInstance();
 		}
 
 		void initialize(){
@@ -100,6 +105,27 @@ class MazeScene : public Minigame
 
 
 			currentState = MazeState::TutorialMessage;
+
+			// TODO:
+			// - add functionality to buttons in popup menu
+			// - add line by line text in popup menu 
+			// - calculate terminal object's new position based on commands
+
+			dummy = new m3dCI::Sprite(*(ResourceManager::getSprite("retry.png")));
+			dummy->setPosition(80, 20);
+			
+			retryBtn = om->CreateButton(100, 150, 85, 50, m3d::Color(255, 255, 255), m3d::Color(0, 0, 0), 3);
+			retryBtn->SetText("RETRY");
+
+			exitBtn = om->CreateButton(200, 150, 85, 50, m3d::Color(255, 255, 255), m3d::Color(0, 0, 0), 3);
+			exitBtn->SetText("EXIT");
+
+
+			popupText = new m3dCI::Text("Use the commands!");
+			popupText->setFontSize(.7);
+			popupText->setFontWeight(.7);
+			popupText->setColor(m3d::Color(0, 0, 0));	
+			popupText->setPosition(100,50);
 		}
 
 		void draw(){
@@ -107,16 +133,40 @@ class MazeScene : public Minigame
 
 		    wallpaper->setPosition(0,0);
             screen->drawTop(*wallpaper);
+			//ObjectManager* om = ObjectManager::getInstance();
 
             if(currentState == MazeState::TutorialMessage)
             {   
+				
+				
                 screen->drawTop(*popup);
+				screen->drawTop(*popupText, RenderContext::Mode::Flat);
+				screen->drawTop(*retryBtn, RenderContext::Mode::Flat);
+				screen->drawTop(*exitBtn, RenderContext::Mode::Flat);
+				
+				
+				
             }
 
 			//screen->drawBottom(*bwallpaper);
 			//screen->drawBottom(*prompt);
 
             runner->draw();
+
+			/*
+			if (runner->getPosition().u >= 370 || runner->getPosition().v >= 220)
+			{
+				//loseScreen = new m3d::Rectangle(300, 300, 50, 50, m3d::Color(0, 0, 100));
+				//screen->drawTop(*loseScreen);
+				screen->drawTop(*popup);
+				m3d::Text* loseMsg = new m3d::Text("You lose ...", m3d::Color(0, 0, 0));
+				loseMsg->setPosition(140, 120);
+				
+				screen->drawTop(*loseMsg);
+				//screen->drawTop(*dummy);
+			}
+			*/
+		
 
 		}
 
@@ -169,8 +219,14 @@ class MazeScene : public Minigame
         void onExit(){};
         bool checkWinCond(){return true;};
         void loadScene(){};
+        
+		void loadLoseScr()
+		{
+			
+		}
+
+
         void loadWinScr(){};
-        void loadLoseScr(){};
         void requestUI(){};
         void closeGame(){};
 };
