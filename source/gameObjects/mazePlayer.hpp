@@ -15,8 +15,8 @@ public:
     TerminalObject(bool (*walls)[24][40])
     {
         wall =  walls;
-        x = 370;
-        y = 220;
+        x = 10;
+        y = 0;
         xScale = 1;
         yScale = 1;
         angle = 0;
