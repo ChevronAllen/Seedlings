@@ -109,6 +109,15 @@ void ObjectManager::OnUpdate()
 			//only fires if point is actually inside the command lister
 			commandListersClone[i]->SelectPoint(lastFrameTouchX, lastFrameTouchY);
 		}
+
+		for (unsigned int i = 0; i < commandEditors.size(); i++)
+		{
+			if (commandEditors[i] == nullptr)
+				continue;
+
+			//only fires if point is actually inside the command lister
+			commandEditors[i]->HandleClick(lastFrameTouchX, lastFrameTouchY);
+		}
 	}
 	
 	for (unsigned int i = 0; i < buttonsClone.size(); i++)
@@ -240,5 +249,31 @@ void ObjectManager::DeleteCommandLister(m3dCI::CommandLister* cl)
 	{
 		delete(commandListers[index]);
 		commandListers.erase(commandListers.begin() + index);
+	}
+}
+
+
+m3dCI::CommandEditor* ObjectManager::CreateCommandEditor(CommandObject* command)
+{
+	m3dCI::CommandEditor* ce = new m3dCI::CommandEditor(command);
+
+	commandEditors.push_back(ce);
+
+	return ce;
+}
+
+void ObjectManager::DeleteCommandEditor(m3dCI::CommandEditor* ce)
+{
+	int index = -1;
+
+	for (unsigned int i = 0; i < commandEditors.size(); i++)
+		if (commandEditors[i] == ce)
+			index = i;
+
+	if (index != -1)
+	{
+		delete(commandEditors[index]);
+
+		commandEditors.erase(commandEditors.begin() + index);
 	}
 }

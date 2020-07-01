@@ -46,7 +46,7 @@ namespace m3dCI
 			{
 				{ PAIR("Circle", new CircleCommand()), PAIR("Rectangle", new RectangleCommand()), PAIR("Triangle", nullptr), PAIR("Text", new TextCommand("Empty")), PAIR("Select", new SelectCommand()), PAIR("Delete", new DeleteCommand), NULLPAIR, NULLPAIR },
 				{ COLORPAIR("Red", 255, 0, 0), COLORPAIR("Orange", 255, 127, 0), COLORPAIR("Yellow", 255, 255, 0), COLORPAIR("Green", 0, 255, 0), COLORPAIR("Blue", 0, 0, 255), COLORPAIR("Indigo", 75, 0, 130), COLORPAIR("Violet", 148, 0, 211), COLORPAIR("Black", 0, 0, 0) },
-				{ PAIR("Up", new UpCommand()), PAIR("Down", new DownCommand()), PAIR("Left", new LeftCommand()), PAIR("Right", new RightCommand()), PAIR("Scale", new ScaleCommand(1,1)), PAIR("Scale_X", new ScaleCommand(1, -1)), PAIR("Scale_Y", new ScaleCommand(-1, 1)) },
+				{ PAIR("Up", new UpCommand()), PAIR("Down", new DownCommand()), PAIR("Left", new LeftCommand()), PAIR("Right", new RightCommand()), PAIR("Scale", new ScaleCommand("1","1")), PAIR("Scale_X", new ScaleCommand("1", "-1")), PAIR("Scale_Y", new ScaleCommand("-1", "1")) },
 				{ PAIR("Var", new VarCommand()), PAIR("Get_X", new GetXCommand()), PAIR("Get_Y", new GetYCommand()), PAIR("Get_Angle", new GetAngleCommand()), PAIR("Set_Angle", new SetAngleCommand()), PAIR("Get_Scale_X", nullptr), PAIR("Get_Scale_Y", nullptr) },
 				{ PAIR("If", new IfCommand()), PAIR("Loop", nullptr), PAIR("While", new WhileCommand()), PAIR("End", new EndCommand()), PAIR("Label", new LabelCommand()), PAIR("goto", new GotoCommand()), NULLPAIR, NULLPAIR }
 			};

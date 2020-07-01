@@ -55,8 +55,10 @@ namespace m3dCI
 			void ClearCommands();
 
 			bool canAdd();
+			bool canEdit();
 			bool canRemove();
 			std::vector<CommandObject*> GetCommands();
+			CommandObject* getSelectedObject();
 
 			bool IsBlankCommandSelected();
 

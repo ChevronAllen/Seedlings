@@ -34,8 +34,9 @@ namespace m3dCI
 	{
 		//delete(backgroundRectangle);
 
-		for (unsigned int i = 0; i < tabs.size(); i++)
-			delete(tabs[i]);
+		//these tabs aren't being copied from the sprites. Deleting them would result in crashes later. Should create clones to fix this
+		//for (unsigned int i = 0; i < tabs.size(); i++)
+		//	delete(tabs[i]);
 
 		for (unsigned int i = 0; i < commands.size(); i++)
 			for(unsigned int j = 0; j < commands[i].size(); j++)

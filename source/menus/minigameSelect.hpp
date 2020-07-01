@@ -29,8 +29,8 @@ class MinigameSelect : public Menu
 		
 		m3d::Rectangle* whiteBackground;
 
-		m3dCI::Sprite *selectedMinigameLargeSprite;
-		m3dCI::Text *MinigameSelectTopText, *MinigameDescription, *MinigameName;
+		m3dCI::Sprite *selectedMinigameLargeSprite = nullptr;
+		m3dCI::Text *MinigameSelectTopText = nullptr, *MinigameDescription = nullptr, *MinigameName = nullptr;
 		m3dCI::Button* minigameOptions[MINIGAME_COUNT];
 	public:
 		MinigameSelect(m3d::Screen* screen);

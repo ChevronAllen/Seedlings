@@ -24,10 +24,10 @@ class MenuHandler
 			MainMenu,
 			MinigameSelect,
 			MinigameTemplateMenu,
-			Testing
+			NotTransitioning
 		};
 
-		int transitionBuffer = -1;
+		MenuState transition = MenuState::NotTransitioning;
 
 		static MenuHandler* getInstance();
 		static MenuHandler* createInstance(Screen* screen);

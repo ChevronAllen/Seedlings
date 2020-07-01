@@ -339,3 +339,9 @@ m3d::Color m3dCI::Button::getBorderColor()
 {
 	return outerColor;
 }
+
+void m3dCI::Button::setScale(float x, float y)
+{
+	if(buttonType == ButtonType::SpriteObject)
+		sprite->setScale(x, y);
+}

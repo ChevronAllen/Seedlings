@@ -6,10 +6,10 @@ class RotateCommand : public CommandObject
 
 public:
     
-    RotateCommand(int t_angle = 90 , bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
+	RotateCommand(std::string t_angle = "90", bool t_lockEdit = false, bool t_lockAdd = false) : CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="rotate";
-        m_params[0] = t_angle;
+		setParam(0, t_angle);
     }
 
     ~RotateCommand();

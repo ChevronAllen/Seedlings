@@ -3,6 +3,7 @@
 #include "m3diaLibCI/button.hpp" 
 #include "m3diaLibCI/console.hpp"
 #include "m3diaLibCI/codeEditor.hpp" 
+#include "m3diaLibCI/commandEditor.hpp" 
 #include "m3diaLibCI/commandLister.hpp" 
 #include "util.hpp"
 #include "inputManager.hpp"
@@ -32,6 +33,9 @@ class ObjectManager
 
 		//Array of all active CommandListers
 		std::vector<m3dCI::CommandLister*> commandListers;
+
+		//Array of all active CommandEditors
+		std::vector<m3dCI::CommandEditor*> commandEditors;
 		
 		/*
 			This Class is a singleton. 
@@ -70,5 +74,9 @@ class ObjectManager
 
 		m3dCI::CommandLister* CreateCommandLister();
 
-		void DeleteCommandLister(m3dCI::CommandLister* ce);
+		void DeleteCommandLister(m3dCI::CommandLister* cl);
+
+		m3dCI::CommandEditor* CreateCommandEditor(CommandObject* command);
+
+		void DeleteCommandEditor(m3dCI::CommandEditor* ce);
 };

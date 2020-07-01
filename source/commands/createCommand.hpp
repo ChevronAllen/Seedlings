@@ -8,8 +8,8 @@ public:
     RectangleCommand(std::string t_x = "0", std::string t_y = "0",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="rect";
-        m_params[0] = t_x;
-        m_params[1] = t_y;
+		setParam(0, t_x);
+		setParam(1, t_y);
     }
 
     ~RectangleCommand();
@@ -30,8 +30,8 @@ public:
     CircleCommand(std::string t_x = "0", std::string t_y = "0",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="circle";
-        m_params[0] = t_x;
-        m_params[1] = t_y;
+		setParam(0, t_x);
+		setParam(1, t_y);
     }
 
     ~CircleCommand();
@@ -52,10 +52,7 @@ public:
     TextCommand(std::string t_x = "0", std::string t_y = "0",std::string t_text = "text",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="text";
-        m_params[0] = t_x;
-        m_params[1] = t_y;
-        m_params[2] = t_text;
-
+		setParams(new std::string[3]{ t_x, t_y, t_text });
     }
 
     ~TextCommand();
@@ -76,8 +73,7 @@ public:
     VarCommand(std::string t_name = "text",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="var";
-        m_params[0] = t_name;
-
+		setParam(0, t_name);
     }
 
     ~VarCommand();
@@ -88,5 +84,4 @@ public:
     {
         return  m_params[0] + " = 0\n"; 
     }
-
 };

@@ -270,11 +270,24 @@ namespace m3dCI
 		return true;
 	}
 
+	bool CodeEditor::canEdit()
+	{
+		if (currentSelectedCommand != nullptr && currentSelectedCommand->IsEditLocked())
+			return false;
+
+		return !IsBlankCommandSelected();
+	}
+
 	bool CodeEditor::canRemove()
 	{
 		if (currentSelectedCommand != nullptr && currentSelectedCommand->IsEditLocked())
 			return false;
 
 		return !IsBlankCommandSelected();
+	}
+
+	CommandObject* CodeEditor::getSelectedObject()
+	{
+		return currentSelectedCommand;
 	}
 }

@@ -8,7 +8,7 @@ public:
     UserCommand(std::string t_param ="--",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="lua";
-        m_params[0] = t_param;
+		setParam(0, t_param);
     }
 
     ~UserCommand();

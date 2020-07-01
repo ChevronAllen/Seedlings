@@ -94,5 +94,6 @@ namespace m3dCI
 			void setBorderColor(m3d::Color t_color);
 			m3d::Color getInnerColor();
 			m3d::Color getBorderColor();
+			void setScale(float x, float y);
 	};
 }

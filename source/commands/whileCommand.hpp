@@ -8,7 +8,7 @@ public:
     WhileCommand(std::string t_param ="true",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="while";
-        m_params[0] = t_param;
+		setParam(0, t_param);
     }
 
     ~WhileCommand();

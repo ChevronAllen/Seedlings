@@ -29,7 +29,7 @@ public:
     SetAngleCommand(std::string t_value ="0",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="set angle";
-        m_params[0] = t_value;
+		setParam(0, t_value);
     }
 
     ~SetAngleCommand();

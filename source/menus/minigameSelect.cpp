@@ -53,7 +53,7 @@ MinigameSelect::MinigameSelect(m3d::Screen* screen) :
 
 		m3dCI::Button* newButton;
 		if (minigames[i].getName() != "NULL")
-			newButton = om->CreateButton(x, y, ResourceManager::getSprite(minigames[i].getSmallSpriteLocation()));
+			newButton = om->CreateButton(x, y, new m3dCI::Sprite(*ResourceManager::getSprite(minigames[i].getSmallSpriteLocation())));
 		else
 			newButton = om->CreateButton(x, y, w, h, m3d::Color(255, 255, 255), m3d::Color(0, 0, 0), 3);
 
@@ -84,6 +84,26 @@ void MinigameSelect::OnUpdate()
 	if (util->IsConsoleDrawn())
 		return;
 
+	if (Input::btnReleased(m3d::buttons::DPadRight))
+		SelectMinigame(selectedMinigame == -1 ? 0 : selectedMinigame + 1);
+	else if (Input::btnReleased(m3d::buttons::DPadLeft))
+		SelectMinigame(selectedMinigame == -1 ? 0 : selectedMinigame - 1);
+	else if (Input::btnReleased(m3d::buttons::DPadDown))
+		SelectMinigame(selectedMinigame == -1 ? 0 : selectedMinigame + 3);
+	else if (Input::btnReleased(m3d::buttons::DPadUp))
+		SelectMinigame(selectedMinigame == -1 ? 0 : selectedMinigame - 3);
+
+	if (Input::btnReleased(m3d::buttons::B))
+	{
+		if (selectedMinigame != -1)
+			selectedMinigame = -1;
+		else
+		{
+			mh->TransitionTo(MenuHandler::MenuState::MainMenu);
+			return;
+		}
+	}
+
 	scr->drawTop(*whiteBackground, RenderContext::Mode::Flat);
 	scr->drawBottom(*whiteBackground, RenderContext::Mode::Flat);
 
@@ -98,6 +118,9 @@ void MinigameSelect::OnUpdate()
 
 	for(int i = 0; i < MINIGAME_COUNT; i++)
 		scr->drawBottom(*minigameOptions[i], RenderContext::Mode::Flat);
+
+	if (Input::btnReleased(m3d::buttons::A) && selectedMinigame != -1)
+		minigameOptions[selectedMinigame]->OnRelease();
 }
 
 MinigameSelect::~MinigameSelect()
@@ -114,10 +137,37 @@ MinigameSelect::~MinigameSelect()
 
 void MinigameSelect::SelectMinigame(int index)
 {
+	index = (index < 0?MINIGAME_COUNT + index : index) % MINIGAME_COUNT;
+
+	if (index < 0 || index >= MINIGAME_COUNT)
+		return;
+
+	float xScale = 1.3f;
+	float yScale = 1.3f;
+
+	if (selectedMinigame != -1)
+	{
+		int addedWidth = minigameOptions[selectedMinigame]->getWidth() * xScale - minigameOptions[selectedMinigame]->getWidth();
+		int x = minigameOptions[selectedMinigame]->getXPosition() + (addedWidth / 2);
+		int addedHeight = minigameOptions[selectedMinigame]->getHeight() * yScale - minigameOptions[selectedMinigame]->getHeight();
+		int y = minigameOptions[selectedMinigame]->getYPosition() + (addedHeight / 2);
+
+		minigameOptions[selectedMinigame]->setScale(1.0f, 1.0f);
+		minigameOptions[selectedMinigame]->setPosition(x, y);
+	}
+
 	selectedMinigame = index;
 
-	selectedMinigameLargeSprite = ResourceManager::getSprite(minigames[index].getLargeSpriteLocation());
+	selectedMinigameLargeSprite = new m3dCI::Sprite(*ResourceManager::getSprite(minigames[index].getLargeSpriteLocation()));
 	selectedMinigameLargeSprite->setPosition(10, 45);
+
+	int addedWidth = minigameOptions[index]->getWidth() * xScale - minigameOptions[index]->getWidth();
+	int x = minigameOptions[index]->getXPosition() - (addedWidth / 2);
+	int addedHeight = minigameOptions[index]->getHeight() * yScale - minigameOptions[index]->getHeight();
+	int y = minigameOptions[index]->getYPosition() - (addedHeight / 2);
+
+	minigameOptions[index]->setScale(xScale, yScale);
+	minigameOptions[index]->setPosition(x, y);
 
 	MinigameName->setText(minigames[index].getName());
 	MinigameDescription->setText(minigames[index].getDescription());

@@ -8,7 +8,7 @@ public:
     LeftCommand(std::string t_param = "1",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="left";
-        m_params[0] = t_param;
+		setParam(0, t_param);
     }
 
     ~LeftCommand();
@@ -29,7 +29,7 @@ public:
     RightCommand(std::string t_param = "1",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="right";
-        m_params[0] = t_param;
+		setParam(0, t_param);
     }
 
     ~RightCommand();
@@ -50,7 +50,7 @@ public:
     UpCommand(std::string t_param = "1",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="up";
-        m_params[0] = t_param;
+		setParam(0, t_param);
     }
 
     ~UpCommand();
@@ -71,7 +71,7 @@ public:
     DownCommand(std::string t_param = "1",bool t_lockEdit=false,bool t_lockAdd=false): CommandObject(t_lockEdit, t_lockAdd)
     {
         m_name="down";
-        m_params[0] = t_param;
+		setParam(0, t_param);
     }
 
     ~DownCommand();

@@ -46,12 +46,53 @@ public:
     { 
         return  {"error"};
     }
+
+	std::string* getParams()
+	{
+		return m_params;
+	}
+
+
+	std::string getName()
+	{
+		return m_name;
+	}
+	
+	void setParam(int index, std::string str)
+	{
+		if (str == "")
+			return;
+
+		m_params[index] = str;
+
+		if (m_text[index + 1] == nullptr)
+		{
+			m_text[index + 1] = new m3dCI::Text(str);
+
+			m_text[index + 1]->setColor(COM_TEXT_COLOR);
+			m_text[index + 1]->setFontWeight(0.6f);
+			m_text[index + 1]->setFontSize(0.6f);
+		}
+
+		m_text[index + 1]->setText(str);
+	}
     
     void setParams(std::string t_params[MAX_PARAMS])
     {
-        for (int i = 0; i < MAX_PARAMS; i++)
-        {
-            m_params[i] = t_params[i];
+		for (int i = 0; i < MAX_PARAMS; i++)
+		{
+			m_params[i] = t_params[i];
+
+			if (m_text[i + 1] == nullptr)
+			{
+				m_text[i + 1] = new m3dCI::Text(t_params[i]);
+
+				m_text[i + 1]->setColor(COM_TEXT_COLOR);
+				m_text[i + 1]->setFontWeight(0.6f);
+				m_text[i + 1]->setFontSize(0.6f);
+			}
+
+			m_text[i + 1]->setText(t_params[i]);
         }
     }
 
@@ -108,7 +149,7 @@ public:
 
         int t_paramStartX = t_xCursor - COM_SPACING;
 
-        for (unsigned int i = 1; i < paramCount; i++)
+        for (unsigned int i = 1; i < paramCount + 1; i++)
         {
             if(m_text[i] != nullptr)
             {
