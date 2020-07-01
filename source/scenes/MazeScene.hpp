@@ -156,7 +156,9 @@ class MazeScene : public Minigame
 				if (m3d::buttons::buttonDown(m3d::buttons::Right) && m3d::buttons::buttonPressed(m3d::buttons::Right))
 				{
 					screen->clear(); //
-					
+					SceneManager::transitionTo(nullptr);
+					//MenuHandler *mh = MenuHandler::getInstance();
+					//mh->MenuHandler::TransitionTo(MenuHandler::MenuState::MinigameSelect);
 				}
 
 				//screen->drawTop(*dummy, RenderContext::Mode::Flat);	
