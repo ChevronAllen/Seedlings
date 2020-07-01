@@ -59,8 +59,8 @@ class MazeScene : public Minigame
             //array traversers
             x = 1.0;
 			y = 0.0;
-			goalX = 370;
-			goalY = 220;
+			goalX = 360;
+			goalY = 180;
 		}
 
 		void initialize(){
@@ -146,8 +146,8 @@ class MazeScene : public Minigame
 
 				if (m3d::buttons::buttonDown(m3d::buttons::Right) && m3d::buttons::buttonPressed(m3d::buttons::Right))
 				{
-					screen->clear(); //
-					SceneManager::transitionTo(nullptr);
+					screen->clear(); 
+					//SceneManager::transitionTo(nullptr);
 					//MenuHandler *mh = MenuHandler::getInstance();
 					//mh->MenuHandler::TransitionTo(MenuHandler::MenuState::MinigameSelect);
 				}
@@ -164,7 +164,7 @@ class MazeScene : public Minigame
 			runner->draw();
 		}
 
-        void load(){}; //any data files
+        void load(){}; //any data filess
         
         void unload(){};
         
@@ -191,8 +191,8 @@ class MazeScene : public Minigame
 							new DownCommand("5"),
 							new LeftCommand("18"),
 							new DownCommand("5"),
-							new UpCommand("5"),
 							new RightCommand("18")
+							
 						};
 
 						MenuHandler::RequestUserCode(startingCommands, [&](std::vector<CommandObject*> commands) { SubmitMazeCode(commands); });
