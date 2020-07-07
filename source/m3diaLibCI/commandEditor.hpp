@@ -31,8 +31,6 @@ namespace m3dCI
 
 			m3dCI::Text *name = nullptr;
 			m3dCI::Text *params[MAX_PARAMS] = { nullptr, nullptr, nullptr };
-
-			bool isComplete = false;
 		public:
 			
 			CommandEditor(CommandObject* command);
@@ -43,10 +41,5 @@ namespace m3dCI
 			void draw(m3d::RenderContext t_context);
 
 			void HandleClick(int x, int y);
-
-			bool getComplete()
-			{
-				return isComplete;
-			}
 	};
 }

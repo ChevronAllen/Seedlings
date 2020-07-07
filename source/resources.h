@@ -12,7 +12,7 @@
 #include"m3diaLibCI/sprite.hpp"
 #include "util.hpp"
 
-#define DEBUG
+//#define DEBUG
 
 #define ROMFS_PATH      "romfs:/"
 #define TEXTURE_PATH    "romfs:/gfx/"

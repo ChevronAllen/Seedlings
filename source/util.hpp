@@ -42,6 +42,7 @@ class Util
 	static void PrintLine(std::string text);
 	static void Print(std::string text);
 	
+    void OnDraw();
 	static void drawTop(Drawable& obj, RenderContext::Mode mode, int layer);
 	static void drawBottom(Drawable& obj, RenderContext::Mode mode, int layer);
 	

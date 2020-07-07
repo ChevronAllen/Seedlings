@@ -72,8 +72,8 @@ void Util::OnUpdate()
 		this->app->exit();
 	*/
 	//Check for Console Opening button presses, Open console if successful
-	if (buttonPressed(buttons::Button::L)
-		&& buttonPressed(buttons::Button::R))
+	if ( ( buttonDown(buttons::Button::L) && buttonPressed(buttons::Button::R) ) ||
+         ( buttonPressed(buttons::Button::L) && buttonDown(buttons::Button::R)))
 		this->console->ToggleState();
 	
 	//Console specific actions, Only works when console is on screen
@@ -88,6 +88,14 @@ void Util::OnUpdate()
 			this->PrintLine("Some Text.");
 	
 		//Draw the console
+		//scr->drawTop(*console, RenderContext::Mode::Flat);
+	}
+}
+
+void Util::OnDraw()
+{
+    if(IsConsoleDrawn())
+	{
 		scr->drawTop(*console, RenderContext::Mode::Flat);
 	}
 }

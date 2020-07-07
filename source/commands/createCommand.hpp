@@ -10,6 +10,8 @@ public:
         m_name="rect";
 		setParam(0, t_x);
 		setParam(1, t_y);
+        m_background = m3dCI::Sprite( *ResourceManager::getSprite("command_background_instance.png"));
+        m_background.setTint(COM_LOCK_TINT);
     }
 
     ~RectangleCommand();
@@ -32,6 +34,8 @@ public:
         m_name="circle";
 		setParam(0, t_x);
 		setParam(1, t_y);
+        m_background = m3dCI::Sprite( *ResourceManager::getSprite("command_background_instance.png"));
+        m_background.setTint(COM_LOCK_TINT);
     }
 
     ~CircleCommand();
@@ -53,6 +57,8 @@ public:
     {
         m_name="text";
 		setParams(new std::string[3]{ t_x, t_y, t_text });
+        m_background = m3dCI::Sprite( *ResourceManager::getSprite("command_background_instance.png"));
+        m_background.setTint(COM_LOCK_TINT);
     }
 
     ~TextCommand();
@@ -74,6 +80,8 @@ public:
     {
         m_name="var";
 		setParam(0, t_name);
+        m_background = m3dCI::Sprite( *ResourceManager::getSprite("command_background_var.png"));
+        m_background.setTint(COM_LOCK_TINT);
     }
 
     ~VarCommand();

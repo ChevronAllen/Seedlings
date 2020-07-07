@@ -156,7 +156,7 @@ void LuaSandbox::executeFile(std::string path)
     FILE* fp = fopen(fullPath.c_str(), "r");
     if(fp == NULL)
     {
-        Util::PrintLine("Error: couldnt open file at '" +  fullPath + "'");
+        std::cerr << "Error: couldnt open file at '" << fullPath << "'" << std::endl;
         return;
     }
 

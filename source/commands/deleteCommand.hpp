@@ -9,6 +9,8 @@ public:
     {
         m_name="delete";
 		setParam(0, t_param);
+        m_background = m3dCI::Sprite( *ResourceManager::getSprite("command_background_delete.png"));
+        m_background.setTint(COM_LOCK_TINT);
     }
 
     ~DeleteCommand();

@@ -1,14 +1,10 @@
 name_table = {}
 current_object = nil
-
-function tick()
-    
-end
+_lock = false;
 
 function select_gameobject(name)
-      current_object = name_table[name]
+    current_object = name_table[name]
 end
-
 function delete(name)
     name_table[name] = nil
 end

@@ -64,9 +64,9 @@ class Minigame : public Scene
                 }
 
                 m_mutex_execution.unlock();
+                m3d::Thread::sleep(100);
             }
             //m_mutex_threadState.unlock();
-			
         }
 
         
@@ -103,10 +103,15 @@ class Minigame : public Scene
             
         }
 
-		virtual void onExecutionBegin() = 0;
-        
+        virtual void onExecutionBegin()
+        {
+            
+        }
 
-		virtual void onExecutionEnd() = 0;
+        virtual void onExecutionEnd()
+        {
+            
+        }
 
 	public:
 		//virtual void initialize() = 0;
@@ -120,7 +125,7 @@ class Minigame : public Scene
 
         Minigame()
         {
-			
+                       
             m_sandboxThread = new m3d::Thread( [this](m3d::Parameter p){sandboxRuntime(p);} , &m_sandboxThreadState);
             #ifdef DEBUG
             std::stringstream t_debug;
@@ -154,6 +159,7 @@ class Minigame : public Scene
 		virtual void loadScene() = 0;
 		virtual void loadWinScr() = 0;
 		virtual void loadLoseScr() = 0;
+		virtual void requestUI() = 0;
 		virtual void closeGame() = 0;
 	//from scene
 		virtual void initialize() = 0;
@@ -164,9 +170,9 @@ class Minigame : public Scene
 
 		virtual void onEnter()=0;
 
-		virtual void onExit() = 0;
+		virtual void onExit(){
             
-      
+        };
 
 	
 	

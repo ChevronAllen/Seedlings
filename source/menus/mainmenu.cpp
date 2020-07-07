@@ -57,8 +57,10 @@ void MainMenu::OnUpdate()
 		}
 		else
 		{
-			if (m3d::buttons::buttonReleased(m3d::buttons::Button::Start))
+			/*if (m3d::buttons::buttonReleased(m3d::buttons::Button::Start))
+			{
 				MenuHandler::getInstance()->TransitionTo(MenuHandler::MenuState::MinigameSelect);
+			}*/
 		}
 	}
 

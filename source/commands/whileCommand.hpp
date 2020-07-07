@@ -9,6 +9,8 @@ public:
     {
         m_name="while";
 		setParam(0, t_param);
+        m_background = m3dCI::Sprite( *ResourceManager::getSprite("command_background_branching.png"));
+        m_background.setTint(COM_LOCK_TINT);
     }
 
     ~WhileCommand();

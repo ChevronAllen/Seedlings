@@ -110,7 +110,10 @@ public:
         {
             std::cerr << "Error: memory allocation error, not enough space \n";
         }
+        luaopen_base(state);
+        luaopen_table(state);
         bindAPI();
+        executeFile("lua/init_scene.lua");
     }
 
     ~LuaSandbox()

@@ -1,3 +1,7 @@
 --atlas -f rgba8888 -z auto
-command_background.png
 command_lock.png
+command_background.png
+command_background_var.png
+command_background_delete.png
+command_background_instance.png
+command_background_branching.png

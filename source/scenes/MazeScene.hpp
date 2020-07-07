@@ -13,17 +13,13 @@ class MazeScene : public Minigame
 		m3dCI::Sprite *wallpaper;
 		m3dCI::Sprite *texture;
         m3dCI::Sprite* popup;
-		m3dCI::Sprite* dummy;
-		m3dCI::Button *retryBtn, *exitBtn;
 		m3d::Rectangle *winScreen;
         m3d::Rectangle *loseScreen;
 		m3d::Color *colorRec;
 		m3d::Color *colorText;
-		m3d::Text *prompt;
-		m3dCI::Text* popupText;
-		TerminalObject* runner;
-		int goalX, goalY; 
-
+		m3dCI::Text *prompt;
+		m3dCI::Text *winPrompt;
+        TerminalObject *runner;
 		int x, y, runnerID;
         bool walls[12][20] ={{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 							{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -54,20 +50,15 @@ class MazeScene : public Minigame
 		};
 		MazeState currentState;
 	public:
-		MazeScene()
+		MazeScene(): Minigame()
 		{
             //array traversers
             x = 1.0;
 			y = 0.0;
-			goalX = 360;
-			goalY = 180;
 		}
 
 		void initialize(){
-	
-
-            sandbox = new LuaSandbox();
-			sandbox->executeFile("lua/init_scene.lua");
+            
 
         //loads and gets maze texture
 			//texture = new m3dCI::Sprite(*(ResourceManager::getSprite("wall.png")));
@@ -87,39 +78,25 @@ class MazeScene : public Minigame
 
        //initializes text and bottom screen background
 			winScreen = new m3d::Rectangle(0,0,320,240,*colorRec);
-			prompt = new m3d::Text("Maze",*colorText);
-			prompt->setPosition(160,120);
+			winPrompt = new m3dCI::Text("You Win!",*colorText);
+			winPrompt->setPosition(90,30);
+			winPrompt->setFontSize(.5);
+			winPrompt->setFontWeight(.5);
+			winPrompt->setPosition(160,120);
+			
+			prompt = new m3dCI::Text(" Use move commands to traverse \n the maze. In order to add a move \n command select Add, then go to\n the tab with the arrows. There\n you can select up, down, left \n or right as a direction to\n move in the maze. You can then\n change the amount of spaces you\n want to move by selecting it and\n clicking edit. Be sure to enter all\n commands you will need to get to\n the end of the maze before running.",*colorText);
+			prompt->setPosition(90,30);
+			prompt->setFontSize(.5);
+			prompt->setFontWeight(.5);
 			wallpaper   = new m3dCI::Sprite(*(ResourceManager::getSprite("maze1.png")));
             //  Initialize popup BG
-            popup       = new m3dCI::Sprite(*(ResourceManager::getSprite("menu_popup.png")));
+            popup  = new m3dCI::Sprite(*(ResourceManager::getSprite("menu_popup.png")));
             popup->setPosition(80,20);
 		    //wallpaper->setTexture(*texture);
 		    wallpaper->setCenter(0,0);
 		    wallpaper->setScale(1,1);
 
-
-
 			currentState = MazeState::TutorialMessage;
-
-			// TODO:
-			// - add functionality to buttons in popup menu (highlight)
-			// - add line by line text in popup menu 
-
-			//dummy = new m3dCI::Sprite(*(ResourceManager::getSprite("retry.png")));
-			//dummy->setPosition(80, 20);
-			
-			retryBtn = new m3dCI::Button(100, 150, 85, 50, m3d::Color(255, 255, 255), m3d::Color(0, 0, 0), 3);
-			retryBtn->SetText("RETRY");
-
-			exitBtn = new m3dCI::Button(200, 150, 85, 50, m3d::Color(255, 255, 255), m3d::Color(0, 0, 0), 3);
-			exitBtn->SetText("EXIT");
-
-
-			popupText = new m3dCI::Text("You lose ... ");
-			popupText->setFontSize(.7);
-			popupText->setFontWeight(.7);
-			popupText->setColor(m3d::Color(0, 0, 0));	
-			popupText->setPosition(100,50);
 		}
 
 		void draw(){
@@ -128,55 +105,37 @@ class MazeScene : public Minigame
 		    wallpaper->setPosition(0,0);
             screen->drawTop(*wallpaper);
 
-		
-
-            if (currentState == MazeState::Lose)
+            if(currentState == MazeState::TutorialMessage)
             {   
-				screen->drawTop(*popup);
-				screen->drawTop(*popupText, RenderContext::Mode::Flat);
-				screen->drawTop(*retryBtn, RenderContext::Mode::Flat);
-				screen->drawTop(*exitBtn, RenderContext::Mode::Flat);
-
-
-				if (m3d::buttons::buttonDown(m3d::buttons::Left) && m3d::buttons::buttonPressed(m3d::buttons::Left))
-				{
-					screen->clear();
-					initialize();
-				}
-
-				if (m3d::buttons::buttonDown(m3d::buttons::Right) && m3d::buttons::buttonPressed(m3d::buttons::Right))
-				{
-					screen->clear(); 
-					//SceneManager::transitionTo(nullptr);
-					//MenuHandler *mh = MenuHandler::getInstance();
-					//mh->MenuHandler::TransitionTo(MenuHandler::MenuState::MinigameSelect);
-				}
-
-				//screen->drawTop(*dummy, RenderContext::Mode::Flat);	
+                screen->drawTop(*popup);
+				screen->drawTop(*prompt);
+				//use m3dci for prompt
             }
 
-
-			
+			if(currentState == MazeState::Win)
+            {   
+                screen->drawTop(*popup);
+				screen->drawTop(*winPrompt);
+				//use m3dci for prompt
+            }
 
 			//screen->drawBottom(*bwallpaper);
 			//screen->drawBottom(*prompt);
 
-			runner->draw();
-		}
+            runner->draw();
 
-        void load(){}; //any data filess
+		}
+		
+        void load(){}; //any data files
         
         void unload(){};
         
         void update(){
 
-		
 			switch (currentState)
-			{	
+			{
 				case MazeState::TutorialMessage:
-					
-					
-					
+
 					if (buttons::buttonDown(buttons::Start))
 					{
 						currentState = MazeState::Requesting;
@@ -184,7 +143,8 @@ class MazeScene : public Minigame
 						std::vector<CommandObject*> startingCommands =
 						{
 							new SelectCommand("runner",true,true),
-							new DownCommand("5",false,true),
+							new RightCommand("18",false,true),
+							new DownCommand("5"),
 							new LeftCommand("18"),
 							new DownCommand("5"),
 							new RightCommand("18"),
@@ -192,13 +152,16 @@ class MazeScene : public Minigame
 							new LeftCommand("18"),
 							new DownCommand("5"),
 							new RightCommand("18")
-							
 						};
 
 						MenuHandler::RequestUserCode(startingCommands, [&](std::vector<CommandObject*> commands) { SubmitMazeCode(commands); });
 					}
 					break;
-				case MazeState::Execute:		
+				case MazeState::Execute:
+					if(checkWinCond() == 1)
+					{
+						currentState = MazeState::Win;
+					}
 					break;
 				case MazeState::Win:
 					break;
@@ -211,47 +174,33 @@ class MazeScene : public Minigame
 
 		void SubmitMazeCode(std::vector<CommandObject*> luaCode)
 		{
-			std::string str = CommandObject::ConvertBulk(luaCode);
+			//std::string str = "coroutine.create(function ()" + CommandObject::ConvertBulk(luaCode) + " end)" ;
+            Util::PrintLine("execute commands");
+            std::string str = CommandObject::ConvertBulk(luaCode);
 
-			Util::getInstance()->PrintLine(str);
 
-			sandbox->executeString(str);
+			//Util::getInstance()->PrintLine(str);
+			executeInSandbox(str);
+            Util::PrintLine("done");
+
 			currentState = MazeState::Execute;
-			checkOutcome();
 		}
 
         void onEnter(){};
         void onExit(){};
-        bool checkWinCond(){return true;};
-        void loadScene(){};
-        
-		void loadWinScr() {};
-		void loadLoseScr() {};
-		void onExecutionBegin()
+        bool checkWinCond()
 		{
-
-		}
-
-		void onExecutionEnd()
-		{
-
-		}
-
-
-        void checkOutcome()
-		{
-			if (runner->getPosition().u < goalX || runner->getPosition().v < goalY)
-			{
-				currentState = MazeState::Lose;
-			}
+			if(runner->winCond())
+				return true;
 			else
 			{
-				currentState = MazeState::Win;
+				return false;
 			}
-		}
-
-		// revert control back to menu handler
-		// go to minigame select
-		// destroy maze game object
+			
+		};
+        void loadScene(){};
+        void loadWinScr(){};
+        void loadLoseScr(){};
+        void requestUI(){};
         void closeGame(){};
 };

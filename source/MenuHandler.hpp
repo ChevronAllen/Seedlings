@@ -38,6 +38,7 @@ class MenuHandler
 		void TransitionTo(MenuState state);
 		virtual ~MenuHandler();
 
+		static MenuState GetTransitionState();
 		static void AddCommand(CommandObject *command);
 		static void RequestUserCode(std::vector<CommandObject*> commands, std::function<void(std::vector<CommandObject*>)> callbackFunction);
 	private:
@@ -58,5 +59,6 @@ class MenuHandler
 			All further attempts to accesss this class can use dummy values for all parameters of getInstance
 		*/
 		static MenuHandler *instance;
+
 		MenuHandler(Screen* screen);
 };

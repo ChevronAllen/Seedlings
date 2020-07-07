@@ -19,7 +19,7 @@ public:
 		largeSprite = largeSpriteLocation;
 	}
 
-	MinigameDescriptor() : MinigameDescriptor("NULL", "NULL", "NULL", "NULL") {}
+	MinigameDescriptor() : MinigameDescriptor("NULL", "NULL", "blankMinigameSmall.png", "blankMinigameLarge.png") {}
 
 	string getName() { return name; };
 	string getDescription() { return description; };

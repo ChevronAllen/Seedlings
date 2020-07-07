@@ -3,11 +3,18 @@
 
 #include "../userAPI.hpp"
 
+/**
+ * 
+ * https://stackoverflow.com/questions/1903954/is-there-a-standard-sign-function-signum-sgn-in-c-c
+ */
+template <typename T> int sign(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
 int UserAPI::move_object(lua_State* L)
 {
-    lua_Number y = lua_tonumber(L,-1);
-    lua_Number x = lua_tonumber(L,-2); 
+    int y = lua_tonumber(L,-1);
+    int x = lua_tonumber(L,-2); 
     lua_Number t_id = lua_tonumber(L,-3);
     
     Scene* scene = SceneManager::getScene();
@@ -25,7 +32,20 @@ int UserAPI::move_object(lua_State* L)
         return 0;
     }
     
-    obj->moveTo(x,y);
+    Util::PrintLine("move [" + std::to_string(t_id) + "]. x: " +  std::to_string(x) + ", y: " +  std::to_string(y) );
+    
+    while(!(x == 0 && y == 0))
+    {
+        x = x - sign(x);
+        y = y - sign(y);
+        
+
+        Util::PrintLine("step [" + std::to_string(t_id) + "]. x: " +  std::to_string(sign(x)) + ", y: " +  std::to_string(sign(x)) );
+        obj->moveTo(    sign(x),
+                        sign(y));
+        m3d::Thread::sleep(STEP_TIME);
+    }
+    
 
     return 0;
 }
@@ -103,7 +123,7 @@ int UserAPI::set_position(lua_State* L)
     }
 
     currObj->setPosition(t_x, t_y);
-    
+    m3d::Thread::sleep(STEP_TIME);
     return 0;
 }
 
@@ -174,7 +194,7 @@ int UserAPI::rotate(lua_State* L)
     }
 
     currObj->Rotate(t_angle);
-
+    m3d::Thread::sleep(STEP_TIME);
     return 0;
 }
     
@@ -198,6 +218,7 @@ int UserAPI::set_angle(lua_State* L)
     }
 
     currObj->setAngle(t_angle);
+    m3d::Thread::sleep(STEP_TIME);
     return 0;
 }
     
@@ -246,6 +267,7 @@ int UserAPI::set_scale(lua_State* L)
     }
 
     currObj->setScale(t_width,t_height);
+    m3d::Thread::sleep(STEP_TIME);
     return 0;
 }
     
@@ -271,6 +293,7 @@ int UserAPI::set_color(lua_State* L)
         Util::PrintLine("Error: could not get specified object " + std::to_string( t_id) +" in Scene" + currScene->getSceneName() + " \n");
 
     }
+    m3d::Thread::sleep(STEP_TIME);
     return 0;
 }
    
@@ -295,7 +318,7 @@ int UserAPI::delete_object(lua_State* L)
 
     currObj->destroy();
     currObj = nullptr;
-
+    m3d::Thread::sleep(STEP_TIME);
     return 0;
 }
  

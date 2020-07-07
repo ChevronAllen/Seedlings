@@ -1,6 +1,10 @@
 #include "minigameSelect.hpp"
 #include "../scenes/MazeScene.hpp"
 
+
+#define xScale 1.3f
+#define yScale 1.3f
+
 MinigameSelect::MinigameSelect(m3d::Screen* screen) :
 	Menu(screen)
 {
@@ -52,7 +56,7 @@ MinigameSelect::MinigameSelect(m3d::Screen* screen) :
 			h = ButtonHeight;
 
 		m3dCI::Button* newButton;
-		if (minigames[i].getName() != "NULL")
+		if (minigames[i].getSmallSpriteLocation() != "NULL")
 			newButton = om->CreateButton(x, y, new m3dCI::Sprite(*ResourceManager::getSprite(minigames[i].getSmallSpriteLocation())));
 		else
 			newButton = om->CreateButton(x, y, w, h, m3d::Color(255, 255, 255), m3d::Color(0, 0, 0), 3);
@@ -96,7 +100,17 @@ void MinigameSelect::OnUpdate()
 	if (Input::btnReleased(m3d::buttons::B))
 	{
 		if (selectedMinigame != -1)
+		{
+			int addedWidth = minigameOptions[selectedMinigame]->getWidth() * xScale - minigameOptions[selectedMinigame]->getWidth();
+			int x = minigameOptions[selectedMinigame]->getXPosition() + (addedWidth / 2);
+			int addedHeight = minigameOptions[selectedMinigame]->getHeight() * yScale - minigameOptions[selectedMinigame]->getHeight();
+			int y = minigameOptions[selectedMinigame]->getYPosition() + (addedHeight / 2);
+
+			minigameOptions[selectedMinigame]->setScale(1.0f, 1.0f);
+			minigameOptions[selectedMinigame]->setPosition(x, y);
+
 			selectedMinigame = -1;
+		}
 		else
 		{
 			mh->TransitionTo(MenuHandler::MenuState::MainMenu);
@@ -141,9 +155,6 @@ void MinigameSelect::SelectMinigame(int index)
 
 	if (index < 0 || index >= MINIGAME_COUNT)
 		return;
-
-	float xScale = 1.3f;
-	float yScale = 1.3f;
 
 	if (selectedMinigame != -1)
 	{

@@ -17,15 +17,17 @@
 
 class CommandObject //: public Drawable 
 {
-
+private:
+    bool m_selected = false;
 protected:
+    bool m_isEditLocked = false;
+    bool m_isAddLocked = false;
     std::string m_name;
-    bool m_isEditLocked;
-    bool m_isAddLocked;
     std::string m_params[MAX_PARAMS];
     m3dCI::Sprite m_background;
 	m3dCI::Text* m_text[MAX_PARAMS + 1] = { nullptr, nullptr, nullptr, nullptr };
     m3dCI::Sprite m_lockIcon;
+    m3d::Color tint = m3d::Color();
 
 public:
     CommandObject(bool t_lockEdit = false,bool t_lockAdd = false)
@@ -33,9 +35,9 @@ public:
         m_name="";
         m_isEditLocked = t_lockEdit;
         m_isAddLocked = t_lockAdd;
+        m_text[0] = new m3dCI::Text(m_name);
         m_background = m3dCI::Sprite( *ResourceManager::getSprite("command_background.png"));
         m_background.setTint(COM_LOCK_TINT);
-        m_text[0] = new m3dCI::Text(m_name);
         m_lockIcon = m3dCI::Sprite( *ResourceManager::getSprite("command_lock.png"));
         m_lockIcon.setCenter(-108,7);
     }
@@ -171,5 +173,10 @@ public:
 	{
 		return m_isAddLocked;
 	}
+
+    bool setSelected()
+    {
+
+    }
 };
 

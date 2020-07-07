@@ -42,28 +42,12 @@ void MinigameTemplateMenu::OnUpdate()
 
 	if (commandEditor != nullptr && showCommandEditor)
 	{
-		if (commandEditor->getComplete())
+		scr->drawBottom(*commandEditor);
+
+		if (closeButton != nullptr)
 		{
-			showCommandEditor = false;
-
-			om->DeleteCommandEditor(commandEditor);
-
-			commandLister->SetActive(false);
-			codeEditor->SetActive(true);
-			AddButton->SetEnabledState(true);
-			EditButton->SetEnabledState(true);
-			RemoveButton->SetEnabledState(true);
-			submitButton->SetEnabledState(true);
-		}
-		else
-		{
-			scr->drawBottom(*commandEditor);
-
-			if (closeButton != nullptr)
-			{
-				closeButton->setPosition(BOTTOMSCREEN_WIDTH - 37, 0);
-				scr->drawBottom(*closeButton);
-			}
+			closeButton->setPosition(BOTTOMSCREEN_WIDTH - 37, 0);
+			scr->drawBottom(*closeButton);
 		}
 	}
 

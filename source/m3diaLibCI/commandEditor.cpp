@@ -84,8 +84,7 @@ namespace m3dCI
 				else
 				{
 					command->setParam(selected - 1, sk.getLastInput());
-
-					isComplete = true;
+					params[selected - 1]->setText(command->getParamNames()[selected - 1] + ": " + sk.getLastInput());
 				}
 			}
 			else

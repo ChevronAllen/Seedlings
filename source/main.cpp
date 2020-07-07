@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sstream>
+#include <thread>
+#include <chrono>
 
 #include <3ds.h>
 #include <m3dia.hpp>
@@ -17,9 +20,7 @@
 #include "inputManager.hpp"
 #include "commands/commands.h"
 
-
 using namespace m3d;
-
 
 
 int main(int argc, char* argv[])
@@ -27,12 +28,9 @@ int main(int argc, char* argv[])
 	//  Create default Applet and Screen variables
     Applet app;
     Screen scr;
-	
-    GameManager::Initialize(&app, &scr);
-    //  Create a Sandbox environment (done here for testing)
-	LuaSandbox* sandbox = new LuaSandbox();
 
 	//  Create default Singleton instances of Utility class and ObjectManager class
+    GameManager::Initialize(&app, &scr);
 	Util *util = Util::createInstance(&scr, &app);
 	ObjectManager *om = ObjectManager::createInstance(&scr);
 	MenuHandler *mh = MenuHandler::createInstance(&scr);
@@ -53,19 +51,17 @@ int main(int argc, char* argv[])
 
 		//  Call OnUpdate Function for all Singletons.
         GameManager::Update();
-        //SceneManager::draw();
         Input::update();
 		om->OnUpdate();
 		mh->OnUpdate();
+		util->OnUpdate();
 		SceneManager::OnUpdate();
 
 		SceneManager::OnDraw();
-		util->OnUpdate();
-
+        util->OnDraw();
 		scr.render();
 	}
 
-    sandbox->close();
 	delete (util);
 	delete (mh);
 	delete (om);
