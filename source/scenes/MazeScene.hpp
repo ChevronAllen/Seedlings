@@ -227,6 +227,15 @@ class MazeScene : public Minigame
         
 		void loadWinScr() {};
 		void loadLoseScr() {};
+		void onExecutionBegin()
+		{
+
+		}
+
+		void onExecutionEnd()
+		{
+
+		}
 
 
         void checkOutcome()
