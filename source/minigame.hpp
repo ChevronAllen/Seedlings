@@ -20,6 +20,7 @@ class Minigame : public Scene
         m3d::Mutex  m_mutex_execution, m_mutex_sandbox, m_mutex_threadState;
         int m_sandboxThreadState = THREAD_RUNNING;
         std::string* m_luaChunk = nullptr;
+		bool onExec = false; 
 
         void sandboxRuntime(m3d::Parameter param)
         {
@@ -59,13 +60,14 @@ class Minigame : public Scene
                     //  TODO: Disable Command Menu
                     sandbox->executeString(*m_luaChunk);
                     m_luaChunk = nullptr;
-                    onExecutionBegin();
-
+                    onExecutionEnd();
                 }
 
                 m_mutex_execution.unlock();
                 m3d::Thread::sleep(100);
+				
             }
+
             //m_mutex_threadState.unlock();
         }
 
@@ -74,7 +76,6 @@ class Minigame : public Scene
 	protected:
 		static bool winCond;
 		
-        
         void executeInSandbox(std::string chunk)
         {
             
@@ -103,14 +104,19 @@ class Minigame : public Scene
             
         }
 
-        virtual void onExecutionBegin()
+        virtual void onExecutionBegin() 
         {
             
         }
 
-        virtual void onExecutionEnd()
+		void setExecutionEnd(bool t_onExec)
+		{
+			onExec = t_onExec;
+		}
+
+        bool onExecutionEnd()
         {
-            
+			return onExec;
         }
 
 	public:
@@ -125,7 +131,6 @@ class Minigame : public Scene
 
         Minigame()
         {
-                       
             m_sandboxThread = new m3d::Thread( [this](m3d::Parameter p){sandboxRuntime(p);} , &m_sandboxThreadState);
             #ifdef DEBUG
             std::stringstream t_debug;
@@ -142,19 +147,6 @@ class Minigame : public Scene
             m_sandboxThread->join();
         }
 
-		// origScene is the new default scene when the player loses
-		// returns true if successful, otherwise false 
-		/*bool reset(Scene *origScene)
-		{
-			if (!winCond)
-			{
-				 m_currentScene = origScene;
-				 m_currentScene->initialize();
-				 return true;
-			}
-
-			return false; 
-		}*/
 
 		virtual void loadScene() = 0;
 		virtual void loadWinScr() = 0;

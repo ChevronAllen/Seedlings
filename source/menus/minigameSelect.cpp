@@ -1,6 +1,6 @@
 #include "minigameSelect.hpp"
 #include "../scenes/MazeScene.hpp"
-
+#include "../scenes/PongScene.hpp"
 
 #define xScale 1.3f
 #define yScale 1.3f
@@ -68,6 +68,8 @@ MinigameSelect::MinigameSelect(m3d::Screen* screen) :
 			{
 				if (i == MINIGAME_LIST::MAZE)
 					SceneManager::transitionTo(new MazeScene());
+				if (i == MINIGAME_LIST::PONG)
+					SceneManager::transitionTo(new PongScene());
 
 				MenuHandler::getInstance()->TransitionTo(MenuHandler::MenuState::MinigameTemplateMenu);
 			}

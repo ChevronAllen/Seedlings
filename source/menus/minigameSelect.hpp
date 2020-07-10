@@ -11,7 +11,8 @@ class MinigameSelect : public Menu
 	private:
 		enum MINIGAME_LIST
 		{
-			MAZE = 0
+			MAZE = 0,
+			PONG = 1
 		};
 
 		//std::vector<MinigameDescriptor

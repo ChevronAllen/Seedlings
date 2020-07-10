@@ -15,10 +15,11 @@ class MazeScene : public Minigame
         m3dCI::Sprite* popup;
 		m3d::Rectangle *winScreen;
         m3d::Rectangle *loseScreen;
+		m3dCI::Button *retryBtn, *exitBtn;
 		m3d::Color *colorRec;
 		m3d::Color *colorText;
 		m3dCI::Text *prompt;
-		m3dCI::Text *winPrompt;
+		m3dCI::Text *winPrompt, *losePrompt;
         TerminalObject *runner;
 		int x, y, runnerID;
         bool walls[12][20] ={{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -96,6 +97,19 @@ class MazeScene : public Minigame
 		    wallpaper->setCenter(0,0);
 		    wallpaper->setScale(1,1);
 
+			retryBtn = new m3dCI::Button(100, 150, 85, 50, m3d::Color(255, 255, 255), m3d::Color(0, 0, 0), 3);
+			retryBtn->SetText("RETRY");
+
+			exitBtn = new m3dCI::Button(200, 150, 85, 50, m3d::Color(255, 255, 255), m3d::Color(0, 0, 0), 3);
+			exitBtn->SetText("EXIT");
+
+
+			losePrompt = new m3dCI::Text("You lose ... ");
+			losePrompt->setFontSize(.7);
+			losePrompt->setFontWeight(.7);
+			losePrompt->setColor(m3d::Color(0, 0, 0));
+			losePrompt->setPosition(100, 50);
+
 			currentState = MazeState::TutorialMessage;
 		}
 
@@ -119,6 +133,27 @@ class MazeScene : public Minigame
 				//use m3dci for prompt
             }
 
+			if (currentState == MazeState::Lose)
+			{
+				screen->drawTop(*popup);
+				screen->drawTop(*losePrompt, RenderContext::Mode::Flat);
+				screen->drawTop(*retryBtn, RenderContext::Mode::Flat);
+				screen->drawTop(*exitBtn, RenderContext::Mode::Flat);
+
+
+				if (m3d::buttons::buttonDown(m3d::buttons::Left) && m3d::buttons::buttonPressed(m3d::buttons::Left))
+				{
+					screen->clear();
+					initialize();
+				}
+
+				if (m3d::buttons::buttonDown(m3d::buttons::Right) && m3d::buttons::buttonPressed(m3d::buttons::Right))
+				{
+					screen->clear();
+					//
+				}
+			}
+
 			//screen->drawBottom(*bwallpaper);
 			//screen->drawBottom(*prompt);
 
@@ -131,7 +166,7 @@ class MazeScene : public Minigame
         void unload(){};
         
         void update(){
-
+		
 			switch (currentState)
 			{
 				case MazeState::TutorialMessage:
@@ -151,7 +186,8 @@ class MazeScene : public Minigame
 							new DownCommand("5"),
 							new LeftCommand("18"),
 							new DownCommand("5"),
-							new RightCommand("18")
+							new RightCommand("5")
+							//new RightCommand("18")
 						};
 
 						MenuHandler::RequestUserCode(startingCommands, [&](std::vector<CommandObject*> commands) { SubmitMazeCode(commands); });
@@ -161,6 +197,10 @@ class MazeScene : public Minigame
 					if(checkWinCond() == 1)
 					{
 						currentState = MazeState::Win;
+					}
+					else if (onExecutionEnd())
+					{
+						currentState = MazeState::Lose;
 					}
 					break;
 				case MazeState::Win:
