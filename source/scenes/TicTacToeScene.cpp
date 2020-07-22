@@ -29,7 +29,7 @@ void TicTacToeScene::initialize() {
 	prompt->setPosition(90,30);
 	prompt->setFontSize(.5);
 	prompt->setFontWeight(.5);
-	wallpaper = new SpriteMenuItem(*(ResourceManager::getSprite("tictactoe1.png")));
+	wallpaper = new SpriteMenuItem(*(ResourceManager::getSprite("TTT_BG.png")));
 	menu->AddItem(wallpaper);
 
     popup = new SpriteMenuItem(*(ResourceManager::getSprite("menu_popup.png")));

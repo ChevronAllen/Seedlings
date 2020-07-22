@@ -27,8 +27,8 @@ class TicTacToeScene : public Minigame
         enum BoardState
         {
             VACANT,
-            PLAYER,
-            ENEMY
+            X,
+            O
         };
 
         BoardState currentBoardState[3][3];
